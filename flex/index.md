@@ -94,3 +94,12 @@ Flex属性的简写: flex-grow, flex-shrink, flex-basis
 `align-self`会对齐当前flex行中的flex元素，并覆盖`align-items`的值。如果任何flex元素的侧轴方向margin值设置为auto,则会忽略`align-self`。
 - auto(默认值) 继承父元素的`align-items`属性，如果没有父元素则设置为`stretch`。
 - 其余取值与`align-items`属性完全一致。
+
+
+### 兼容问题
+1. 当容器设置了min-height，IE10-11浏览器无法使用align-items对齐元素。（如果可能的话，使用height来替代min-height。 ）
+2. flex第三个参数（flex-basis）如果没有带单位，会被IE10-11会视为非法规则并忽略掉。常使用0%来替代0px。
+
+### 效果预览
+[Flex弹性布局](https://github.com/cloudtian/blogs/blob/master/flex/index.html)
+![Flex弹性布局](https://github.com/cloudtian/blogs/blob/master/flex/flex.png)
