@@ -1,0 +1,431 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            fieldset {
+                border: 2px solid #eaeefb;
+                border-radius: 4px;
+                margin-bottom: 10px;
+                font-weight: bold; 
+            }
+            .block {
+                margin: 10px;
+                font-weight: normal; 
+            }
+            .flex {
+                display: flex;
+                border:1px solid red;
+                width: 90vw;
+                background-color: #f9fafc;
+                font-weight: normal;
+            }
+            .flex > .flex-item:nth-child(odd) {
+                background-color: #565758; 
+            }
+            .flex > .flex-item:nth-child(even) {
+                background-color: #4673db; 
+            }
+            .flex-item {
+                width: 250px;
+                border: 1px solid rgb(221, 112, 112);
+            }
+
+
+            .flex.row {
+                flex-direction: row;
+            }
+            .flex.row-reverse {
+                flex-direction: row-reverse;
+            }
+            .flex.column {
+                flex-direction: column;
+            }
+            .flex.column-reverse {
+                flex-direction: column-reverse;
+            }
+
+            .flex.wrap {
+                flex-wrap: wrap;
+            }
+            .flex.nowrap {
+                flex-wrap: nowrap;
+            }
+            .flex.wrap-reverse {
+                flex-wrap: wrap-reverse;
+            }
+            
+            .justify-content .flex.flex-start {
+                justify-content: flex-start;
+            }
+            .justify-content .flex.flex-end {
+                justify-content: flex-end;
+            }
+            .justify-content .flex.center {
+                justify-content: center;
+            }
+            .justify-content .flex.space-around {
+                justify-content: space-around;
+            }
+            .justify-content .flex.space-between {
+                justify-content: space-between;
+            }
+
+            .align-items .flex {
+                height: 80px;
+            }
+            .align-items .flex.flex-start {
+                align-items: flex-start;
+            }
+            .align-items .flex.flex-end {
+                align-items: flex-end;
+            }
+            .align-items .flex.center {
+                align-items: center;
+            }
+            .align-items .flex.stretch {
+                align-items: stretch;
+            }
+            .align-items .flex.baseline {
+                align-items: baseline;
+            }
+
+            .align-content .flex {
+                height: 80px;
+                flex-wrap: wrap;
+            }
+            .align-content .flex.flex-start {
+                align-content: flex-start;
+            }
+            .align-content .flex.flex-end {
+                align-content: flex-end;
+            }
+            .align-content .flex.center {
+                align-content: center;
+            }
+            .align-content .flex.space-around {
+                align-content: space-around;
+            }
+            .align-content .flex.space-between {
+                align-content: space-between;
+            }
+            .align-content .flex.stretch {
+                align-content: stretch;
+            }
+
+            .align-self .flex {
+                align-content: flex-start;
+                height: 80px;
+            }
+            .align-self .flex-item {
+                flex: 1;
+            }
+            .align-self .flex.auto .flex-item-self {
+                align-self: auto;
+            }
+            .align-self .flex.flex-start .flex-item-self {
+                align-self: flex-start;
+            }
+            .align-self .flex.flex-end .flex-item-self {
+                align-self: flex-end;
+            }
+            .align-self .flex.center .flex-item-self {
+                align-self: center;
+            }
+            .align-self .flex.stretch .flex-item-self {
+                align-self: stretch;
+            }
+            .align-self .flex.baseline .flex-item-self {
+                align-self: baseline;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <fieldset class="flex-direction">
+            <legend>flex-direction</legend>
+            <div class="block">
+                <div>row</div>
+                <div class="flex row">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>row-reverse</div>
+                <div class="flex row-reverse">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>column</div>
+                <div class="flex column">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>column-reverse</div>
+                <div class="flex column-reverse">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="flex-wrap">
+            <legend>flex-wrap</legend>
+            <div class="block">
+                <div>nowrap</div>
+                <div class="flex nowrap">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                    <div class="flex-item">5</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>wrap</div>
+                <div class="flex wrap">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                    <div class="flex-item">5</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>wrap-reverse</div>
+                <div class="flex wrap-reverse">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                    <div class="flex-item">5</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="justify-content">
+            <legend>justify-content</legend>
+            <div class="block">
+                <div>flex-start</div>
+                <div class="flex flex-start">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>flex-end</div>
+                <div class="flex flex-end">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>center</div>
+                <div class="flex center">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>space-around</div>
+                <div class="flex space-around">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>space-between</div>
+                <div class="flex space-between">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="align-items">
+            <legend>align-items</legend>
+            <div class="block">
+                <div>flex-start</div>
+                <div class="flex flex-start">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>flex-end</div>
+                <div class="flex flex-end">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>center</div>
+                <div class="flex center">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>stretch</div>
+                <div class="flex stretch">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>baseline</div>
+                <div class="flex baseline">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item" style="font-size:40px;">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="align-content">
+            <legend>align-content</legend>
+            <div class="block">
+                <div>flex-start</div>
+                <div class="flex flex-start">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>flex-end</div>
+                <div class="flex flex-end">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>center</div>
+                <div class="flex center">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>space-around</div>
+                <div class="flex space-around">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>space-between</div>
+                <div class="flex space-between">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>stretch</div>
+                <div class="flex stretch">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                    <div class="flex-item">4</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="order">
+            <legend>order</legend>
+            <div class="flex">
+                <div class="flex-item" style="order:2">0(order=2)</div>
+                <div class="flex-item" style="order:99">1(order=99)</div>
+                <div class="flex-item">2</div>
+                <div class="flex-item" style="order:-1">4(order=-1)</div>
+            </div>
+        </fieldset>
+
+        <fieldset class="align-self">
+            <legend>align-self</legend>
+            <div class="block">
+                <div>auto</div>
+                <div class="flex auto">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item flex-item-self">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>flex-start</div>
+                <div class="flex flex-start">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item flex-item-self">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>flex-end</div>
+                <div class="flex flex-end">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item flex-item-self">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>center</div>
+                <div class="flex center">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item flex-item-self">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>stretch</div>
+                <div class="flex stretch">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item flex-item-self">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+            <div class="block">
+                <div>baseline</div>
+                <div class="flex baseline">
+                    <div class="flex-item">0</div>
+                    <div class="flex-item flex-item-self" style="font-size:40px;">1</div>
+                    <div class="flex-item">2</div>
+                </div>
+            </div>
+        </fieldset>
+    </body>
+</html>
