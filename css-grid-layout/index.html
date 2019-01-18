@@ -1,0 +1,219 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            fieldset {
+                border: 2px solid #eaeefb;
+                border-radius: 4px;
+                margin-bottom: 10px;
+                font-weight: bold; 
+            }
+            .block {
+                margin: 10px;
+                font-weight: normal; 
+            }
+            .grid {
+                display: grid;   
+            }
+            .grid-item {
+                border: 1px solid red;
+            }
+
+
+            .normal-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 50px;
+            }
+
+
+            .nest-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 50px; 
+                grid-gap: 10px 20px;
+            }
+            .nest-grid-item {
+                border: 1px dotted burlywood;
+            }
+            .nest-grid-item1 {
+                grid-column-start: 1;
+                grid-column-end: 4;
+                grid-row-start: 1;
+                grid-row-end: 3;
+                display: grid;
+                padding: 5px;
+                grid-template-columns: 2fr 1fr 1fr; 
+                grid-auto-rows: 50px;
+                grid-gap: 5px;
+            }
+            .nest-grid-item2 {
+                grid-column-start: 1;
+                grid-row-start: 2;
+                grid-row-end: 4;
+            }
+
+
+            .flex-grid {
+                grid-template-columns: 100px repeat(3, 1fr);
+                grid-auto-rows: minmax(100px, auto);
+                align-items: flex-end;
+            }
+            .flex-grid-item1 {
+                align-self: stretch;
+            }
+            .flex-grid-item2 {
+                align-self: flex-start;
+            }
+
+
+            .auto-fill-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-rows: repeat(3, 100px); 
+            }
+
+            
+            .header {
+                grid-area: hd;
+            }
+            .footer {
+                grid-area: ft;
+            }
+            .content {
+                grid-area: main;
+            }
+            .sidebar {
+                grid-area: sd;
+            }
+            .grid-area-named {
+                grid-template-columns: 1fr;
+                grid-auto-rows: minmax(100px, auto);
+                grid-template-areas: 
+                "hd"
+                "main"
+                "sd"
+                "ft"
+            }
+            @media (min-width: 500px) {
+                .grid-area-named {
+                    grid-template-columns: repeat(9, 1fr);
+                    grid-template-areas: 
+                    "hd hd hd hd   hd   hd   hd   hd   hd"
+                    "sd sd sd main main main main main main"
+                    "sd sd sd ft   ft   ft   ft   ft   ft"
+                }
+            }
+            @media (min-width: 700px) {
+                .grid-area-named {
+                    grid-template-areas: 
+                    "hd hd hd   hd   hd   hd   hd   hd hd"
+                    "sd sd main main main main main ft ft"
+                }
+            }
+
+
+            .grid-line-named {
+                grid-gap: 10px;
+                grid-template-columns: repeat(12, [col-start] 1fr); 
+            }
+            .grid-line-named .main-header,
+            .grid-line-named .main-footer {
+                grid-column: col-start / span 12;
+            }
+            .grid-line-named .side1 {
+                grid-column: col-start / span 3;
+                grid-row: 2
+            }
+            .grid-line-named .content {
+                grid-column: col-start 4 / span 6;
+                grid-row: 2;
+            }
+            .grid-line-named .side2 {
+                grid-column: col-start 10 / span 3;
+                grid-row: 2;
+            }
+        </style>
+    </head>
+    <body>
+        <fieldset>
+            <legend>grid</legend>
+            <div class="block">
+                <div class="grid normal-grid">
+                    <div class="grid-item grid-item1">One</div>
+                    <div class="grid-item grid-item2">Two</div>
+                    <div class="grid-item grid-item3">Three</div>
+                    <div class="grid-item grid-item4">Four</div>
+                    <div class="grid-item grid-item5">Five</div>
+                    <div class="grid-item grid-item6">Six</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>nest grid</legend>
+            <div class="block">
+                <div class="grid nest-grid">
+                    <div class="grid-item nest-grid-item1">
+                        <div class="nest-grid-item nest-grid-itema">a</div>
+                        <div class="nest-grid-item nest-grid-itemb">b</div>
+                        <div class="nest-grid-item nest-grid-itemc">c</div>
+                    </div>
+                    <div class="grid-item nest-grid-item2">Two</div>
+                    <div class="grid-item nest-grid-item3">Three</div>
+                    <div class="grid-item nest-grid-item4">Four</div>
+                    <div class="grid-item nest-grid-item5">Five</div>
+                    <div class="grid-item nest-grid-item6">Six</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>flex grid</legend>
+            <div class="block">
+                <div class="grid flex-grid">
+                    <div class="grid-item flex-grid-item1">One</div>
+                    <div class="grid-item flex-grid-item2">Two</div>
+                    <div class="grid-item flex-grid-item3">Three</div>
+                    <div class="grid-item flex-grid-item4">Four stretch content</div>
+                    <div class="grid-item flex-grid-item5">Five</div>
+                    <div class="grid-item flex-grid-item6">Six</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>auto-fill</legend>
+            <div class="block">
+                <div class="grid auto-fill-grid">
+                    <div class="grid-item">One</div>
+                    <div class="grid-item">Two</div>
+                    <div class="grid-item">Three</div>
+                    <div class="grid-item">Four</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>网格模板区域</legend>
+            <div class="block">
+                <div class="grid grid-area-named">
+                    <div class="grid-item header">Header</div>
+                    <div class="grid-item sidebar">Sidebar</div>
+                    <div class="grid-item content">Content</div>
+                    <div class="grid-item footer">Footer</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>网格命名线布局</legend>
+            <div class="block">
+                <div class="grid grid-line-named">
+                    <header class="grid-item main-header">I am the header</header>
+                    <aside class="grid-item side1">I am sidebar 1</aside>
+                    <article class="grid-item content">I am the main article</article>
+                    <aside class="grid-item side2">I am sidebar 2</aside>
+                    <footer class="grid-item main-footer">I am the footer</footer>
+                </div>
+            </div>
+        </fieldset>
+    </body>
+</html>
