@@ -120,3 +120,72 @@ CSS网格布局使我们能够将网页分成具有简单属性的行和列。�
 
 **控制顺序**  
 可以在网格项目发生重叠时使用z-index属性控制重叠的顺序。
+
+```css
+.overlay-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(50px, auto);
+    grid-template-areas: 
+    "one one one one one one"
+    "two two three three three three"
+    "four four four four four four"
+}
+.overlay-grid .one {
+    grid-area: one; 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 50px;
+    padding: 10px;
+    grid-gap: 10px;
+}
+.overlay-grid .two {
+    grid-area: two; 
+}
+.overlay-grid .three {
+    grid-area: three; 
+}
+.overlay-grid .four {
+    grid-area: four; 
+}
+.overlay-grid .aaa {
+    grid-column: 1 / -1;
+    grid-row: 1 / 3;
+    background-color: aquamarine;
+    z-index: 1;
+}
+.overlay-grid .bbb {
+    grid-column-start: 1;
+    grid-row: 2 / 4;
+    background-color: bisque;
+    z-index: 2;
+}
+.overlay-grid .ccc {
+    grid-column-start: 2;
+    grid-row: 2 / 4;
+    background-color: coral;
+}
+.overlay-grid .overlay {
+    z-index: 10;
+    grid-column: 3 / -1;
+    grid-row: 1 / 4;
+    border: 2px solid rgb(92,148,13);
+    background-color: rgba(92,148,13,.4);
+    color: rgb(92,148,13);
+    font-size: 150%;
+}
+```
+```html
+<div class="grid overlay-grid">
+    <div class="grid-item one">
+        <div class="nest-grid-item aaa">aaa</div>
+        <div class="nest-grid-item bbb">bbb</div>
+        <div class="nest-grid-item ccc">ccc</div>
+    </div>
+    <div class="grid-item two">Two</div>
+    <div class="grid-item three">Three</div>
+    <div class="grid-item four">Four</div>
+    <div class="grid-item overlay">Overlay</div>
+</div>
+```
+![overlay-grid](https://github.com/cloudtian/blogs/blob/master/css-grid-layout/overlay-grid.jpg)
