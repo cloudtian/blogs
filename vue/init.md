@@ -50,7 +50,7 @@ function Vue (options) {
 找到了Vue的构造函数，再从内向外依次查看每个文件都干了啥。  
 `core/instance/index.js`:
 ```javascript
-// Vue构造函数，就只是调用了一下_init方法，稍后再看_init方法的具体内容
+// Vue构造函数，只是调用了一下_init方法
 function Vue (options) {
     this._init(options);
 }
@@ -137,14 +137,14 @@ Vue.compile = compileToFunctions
 ### 创建Vue实例
 `core/instance/index.js`
 ```javascript
-// Vue构造函数，就直是调用了一下_init方法
+// Vue构造函数，就只是调用了一下_init方法
 function Vue (options) {
     this._init(options);
 }
 ```
 `core/instance/init.js`:
 ```javascript
-// 省略掉生产环境下的提示代码
+// 省略掉开发环境下的提示代码
 Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
     // 唯一自增的ID
@@ -170,30 +170,34 @@ Vue.prototype._init = function (options?: Object) {
     
     vm._self = vm
 
-    // 生命周期的初始化工作，初始化了很多变量（主要是设置了父子组件的引用关系）: $parent,$root,$children,$refs,
+    // 生命周期的初始化工作，初始化了很多变量（主要是设置了父子组件的引用关系）: 
+    // $parent,$root
+    // $children,$refs, 
     // _watcher,_inactive,_directInactive,_isMounted,_isDestroyed,_isBeingDestroyed
     initLifecycle(vm)
 
-    // 注册事件，注意这里注册的不是自己的，而是父组件的。因为很明显父组件的监听器才会注册到孩子身上。
+    // 注册事件，注意这里注册的不是自己的，而是父组件的。
+    // _events, _hasHookEvent
     initEvents(vm)
 
-    // 做一些 render 的准备工作，比如处理父子继承关系等，并没有真的开始 render
+    // render前的的准备工作，比如处理父子继承关系等
     // 添加属性_vnode,_staticTrees, $slots,$scopedSlots 
     // 方法_c(),$createElement() 并且defineReactive $attr和$listeners
     initRender(vm)
 
-    // 准备工作完成，准备进入create阶段，调用beforeCreate钩子
+    // 调用beforeCreate钩子
     callHook(vm, 'beforeCreate')
     initInjections(vm) // resolve injections before data/props
     
-    // initProps,initMethods,initData,initComputed,initWatch
-    // `data`, `props`, `computed` 等都是在这里初始化的，`Vue是如何实现数据响应化的`都在这个函数中
+    // 初始化属性 _watchers
+    // 方法initProps,initMethods,initData,initComputed,initWatch
+    // 初始化data, props, computed，Vue实现数据响应化都在这个函数中
     initState(vm)
 
     // _provided
     initProvide(vm) // resolve provide after data/props
 
-    // 至此create阶段完成
+    // 创建完成，调用created钩子
     callHook(vm, 'created')
 
     // 如果配置了el，则直接挂载，否则就需要手动调用this.$mount(el)进行挂载

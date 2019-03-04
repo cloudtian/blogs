@@ -1,4 +1,4 @@
-### 数据响应
+### 数据响应化
 从`initState`入手  
 `core/instance/state.js`
 ```javascript
@@ -12,6 +12,7 @@ export function initState (vm: Component) {
   if (opts.data) {
     initData(vm)
   } else {
+    // 没有声明data时，直接在vm上创建一个_data空对象并观察
     observe(vm._data = {}, true /* asRootData */)
   }
   if (opts.computed) initComputed(vm, opts.computed)
@@ -26,8 +27,9 @@ export function initState (vm: Component) {
 function initData (vm: Component) {
   let data = vm.$options.data
 
+  // 将数据保存在_data中
   data = vm._data = typeof data === 'function'
-    // data为函数时，为什么不直接调用data方法获取返回值，看看getData()中做了什么其他的事情(调用前后多了个pushTarget, popTarget操作)
+    // data为函数时，为什么不直接调用data方法`data.call(vm, vm)`获取返回值，可以看到getData()中调用前后多了个pushTarget, popTarget操作
     ? getData(data, vm) 
     : data || {}
 
@@ -38,10 +40,13 @@ function initData (vm: Component) {
     const key = keys[i]
     // 检查key是否以_或者$开头
     if (!isReserved(key)) {
-      // 把对vm上数据读写代理到_data上去
+      // 把对vm上数据读写代理到_data上去，添加get,set方法
+      // （这样我们就可以通过this.name取到this.data.name的值）
       proxy(vm, `_data`, key)
     }
   }
+
+  // 观察data数据
   observe(data, true /* asRootData */)
 }
 
@@ -70,13 +75,18 @@ export function getData (data: Function, vm: Component): any {
 `core/observer/index.js`：
 ```javascript
 export function observe (value: any, asRootData: ?boolean): Observer | void {
+
+  // 如果不是对象或是是VNode，则直接返回
   if (!isObject(value) || value instanceof VNode) {
     return
   }
   let ob: Observer | void
+
+  // 有__ob__属性并且是Observer的一个实例，则表示已经被观察过了，直接返回__ob__属性即可
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__
   } else if (
+    // shouldObserve默认是true
     shouldObserve &&
     !isServerRendering() &&
     (Array.isArray(value) || isPlainObject(value)) &&
@@ -100,6 +110,8 @@ export class Observer {
 
   constructor (value: any) {
     this.value = value
+
+    // dep用于收集依赖
     this.dep = new Dep()
     this.vmCount = 0
 
@@ -107,7 +119,7 @@ export class Observer {
     def(value, '__ob__', this)
     if (Array.isArray(value)) {
 
-      // 这里的作用就是把 数组上的原生方法进行了一次劫持，比如调用push方法的时候，其实调用的是被劫持的一个方法，
+      // 这里的作用是把数组上的原生方法进行了一次劫持，比如调用push方法的时候，其实调用的是被劫持的一个方法，
       // 而在这个方法内部，Vue会进行notify操作，因此就知道了你对数组的修改了。不过这个做法没法劫持直接通过下标对数组的修改。
       if (hasProto) {
         protoAugment(value, arrayMethods)
@@ -133,6 +145,7 @@ export class Observer {
   }
 }
 ```
+[Vue数组更新检测注意事项](https://cn.vuejs.org/v2/guide/list.html#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9)
 `Observer`构造方法中首先定义了一个__ob__属性，然后判断value类型，如果是数组，则对遍历每项调用observer，否则调用this.walk();  
 this.walk()函数中对参数obj的每一个键值对进行defineReactive()操作。
 
@@ -164,7 +177,7 @@ export function defineReactive (
     val = obj[key]
   }
 
-  // 如果val是一个对象，那么会递归进行监听。也就是到了new Observer中，childOb返回的是一个observer实例
+  // 如果val是一个对象，则递归进行监听。也就是到了new Observer中，childOb返回的是一个observer实例
   // 有了对孩子的监听器之后，当孩子改变时我们就能知道了
   let childOb = !shallow && observe(val)
 
@@ -174,7 +187,7 @@ export function defineReactive (
     get: function reactiveGetter () {
       const value = getter ? getter.call(obj) : val
       if (Dep.target) {
-        // 添加依赖，如果有孩子，则添加孩子的依赖
+        // 添加依赖，如果有孩子，也添加孩子的依赖
         dep.depend()
         if (childOb) {
           childOb.dep.depend()
