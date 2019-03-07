@@ -5,3 +5,4 @@
 - [初始化](https://github.com/cloudtian/blogs/blob/master/vue/init.md)
 - [数据响应之观察者Observer](https://github.com/cloudtian/blogs/blob/master/vue/data-reactive.md)
 - [订阅者Watcher和依赖收集器Dep](https://github.com/cloudtian/blogs/blob/master/vue/watcher-dep.md)
+- [计算属性的初始化](https://github.com/cloudtian/blogs/blob/master/vue/init-computed.md)
