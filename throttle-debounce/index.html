@@ -1,0 +1,33 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p>F12打开控制台查看效果</p>
+        <div>
+            未进行优化的input
+            <input type="text" oninput="rawInput(this)">
+        </div>
+        <div>
+            节流处理的input
+            <input type="text" oninput="throttleInput(this)">
+        </div>
+        <div>
+            防抖处理的input
+            <input type="text" oninput="debounceInput(this)">
+        </div>
+
+        <script src="./util.js"></script>
+        <script>
+            function cb (e) {
+                console.log(e.value);
+            }
+            function rawInput (e) {
+                return cb(e);
+            }
+            var throttleInput = throttle(cb, 300);
+            var debounceInput = debounce(cb, 300);
+        
+        </script>
+    </body>
+</html>

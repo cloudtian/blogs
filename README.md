@@ -7,5 +7,7 @@ Summary of knowledge
 
 - [Vue源码学习](https://github.com/cloudtian/blogs/blob/master/vue/index.md)
 
+- [节流与防抖](https://github.com/cloudtian/blogs/blob/master/throttle-debounce/index.md)
+
 # issue
 blogs for every little things
