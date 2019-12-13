@@ -15,3 +15,4 @@ blogs for every little things
 # translate
 
 - [强制布局](https://github.com/cloudtian/blogs/blob/master/translate/force-layout.md)
+- [骨架屏](https://github.com/cloudtian/blogs/blob/master/translate/skeleton-screens.md)

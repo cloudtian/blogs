@@ -1,0 +1,23 @@
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <input type="text" id="content">
+        <button id="btn">提交</button><br/>
+        输出：<br/><p id="display"></p>
+        <script>
+            let $content = document.getElementById('content');
+            let $btn = document.getElementById('btn');
+            let $display = document.getElementById('display');
+
+            $btn.onclick = function () {
+                $display.innerHTML += $content.value;
+                //$display.innerText += $content.value;
+
+                // document.write($content.value);
+            }
+        
+        </script>
+    </body>
+</html>
