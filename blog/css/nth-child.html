@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charst="utf-8">
+        <title>nth-child与nth-of-type</title>
+        <style>
+            .nth-wrap div, 
+            .nth-wrap span,
+            .nth-wrap p {
+                display: inline-block;
+                width: 70px;
+                height: 50px;
+                background-color: #ddd;
+                margin: 0;
+            }
+
+            /* nth-child的子元素第2个子元素且为.b时显示红色，但当前第2个子元素是a所以没效果*/
+            .nth-child .b:nth-child(2) {
+                background-color: blue;
+            }
+            /*第四个子元素为b 所以有效果*/
+            .nth-child .b:nth-child(4) {
+                background-color: green;
+            }
+            /*奇数的子元素且为b则显示*/
+            .nth-child .b:nth-child(odd) {
+                background-color: bisque;
+            }
+
+            /*nth-of-type的子元素中按标签分组后，每组的第2个元素是b的，但当前是a，所以没效果*/
+            .nth-of-type .b:nth-of-type(2) {
+                background-color: darkmagenta;  
+            }
+            .nth-of-type .b:nth-of-type(3) {
+                background-color: darkcyan;  
+            }
+            .nth-of-type .b:nth-of-type(6) {
+                background-color: yellow;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>nth-child</h1>
+        <p>x:nth-child(n): 属于其父元素的第n个子元素的每个x</p>
+        <p>计算方式：1.计算同父节点的第几个节点，2.判断选择器</p>
+        <pre>
+            /* nth-child的第2个子元素且为.b时显示红色，但当前第2个子元素是a所以没效果*/
+            .nth-child .b:nth-child(2) {
+                background-color: blue;
+            }
+            /*第四个子元素为b 所以有效果*/
+            .nth-child .b:nth-child(4) {
+                background-color: green;
+            }
+            /*奇数的子元素且为b则显示*/
+            .nth-child .b:nth-child(odd) {
+                background-color: bisque;
+            }
+        </pre>
+        <div class="nth-wrap nth-child">
+            <div class="a">a</div>
+            <div class="a">a</div>
+            <div class="b">b</div>
+            <div class="b">b</div>
+            <div class="b">b</div>
+            <div class="c">c</div>
+        </div>
+     
+        <h1>nth-of-type</h1>
+        <p>x:nth-of-type(n): 属于其父元素的特定元素的第n个节点的每个x</p>
+        <p>计算方式：1.先将同父节点按照标签分组，2.按照分组后的标签是第几个节点，3.判断选择器</p>
+        <pre>
+            /*nth-of-type的子元素中按标签分组后，每组的第2个元素是b的，但当前是a，所以没效果*/
+            .nth-of-type .b:nth-of-type(2) {
+                background-color: darkmagenta;  
+            }
+            .nth-of-type .b:nth-of-type(3) {
+                background-color: darkcyan;  
+            }
+            .nth-of-type .b:nth-of-type(6) {
+                background-color: yellow;
+            }
+        </pre>
+        div,span,p按序排列
+        <div class="nth-wrap nth-of-type">
+            <div class="a">1-div-a</div>
+            <div class="a">2-div-a</div>
+            <div class="b">3-div-b</div>
+            <div class="b">4-div-b</div>
+            <div class="b">5-div-b</div>
+            <div class="c">6-div-c</div>
+            <span class="a">1-span-a</span>
+            <span class="a">2-span-a</span>
+            <span class="b">3-span-b</span>
+            <span class="b">4-span-b</span>
+            <span class="b">5-span-b</span>
+            <span class="c">6-span-c</span>
+            <p class="a">1-p-a</p>
+            <p class="a">2-p-a</p>
+            <p class="b">3-p-b</p>
+            <p class="b">4-p-b</p>
+            <p class="b">5-p-b</p>
+            <p class="c">6-p-c</p>
+        </div>
+
+        乱序的div,p,span分组
+        <div class="nth-wrap nth-of-type">
+            <div class="a">1-div-a</div>
+            <div class="a">2-div-a</div>
+            <div class="b">3-div-b</div>
+            <div class="b">4-div-b</div>   
+            <span class="a">1-span-a</span>
+            <span class="a">2-span-a</span>
+            <span class="b">3-span-b</span>
+            <span class="c">4-span-c</span>
+            <div class="b">5-div-b</div>
+            <div class="c">6-div-c</div>
+            <p class="a">1-p-a</p>
+            <p class="a">2-p-a</p>
+            <p class="b">3-p-b</p>
+            <p class="b">4-p-b</p>
+            <span class="b">5-span-b</span>
+            <span class="b">6-span-b</span>
+            <p class="b">5-p-b</p>
+            <p class="c">6-p-c</p>
+        </div>
+    </body>
+</html>

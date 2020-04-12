@@ -1,0 +1,156 @@
+<html>
+    <head>
+        <title>blank</title>
+        <meta charset="utf-8">
+        <style>
+
+         .generic-font {
+             font-family: generic-font;
+         }   
+         .box {
+             width: 200px;
+             height: auto;
+             border: 1px solid #dcdcdc;
+             min-height: 100px;
+         }
+         .box + .box {
+             margin-top: 20px;
+         }
+        </style>
+    </head>
+    <body>
+
+        <h2>让HTML输出文本不转义</h2>
+        <p>如果有空格和回车这样的特殊字符的简单文本，可以在文本外加pre标签</p>
+        <pre>
+            start
+            用pre标签包裹着的内容
+                 前面有五个空格也能全部显示
+            无法显示空白字符：(&nbsp;)
+            end
+        </pre>
+
+        <p>如果是HTML，JavaScript，xml或其他特殊内容，可以使用xmp标签（不过该元素已被废弃）</p>
+        <xmp>
+            start
+            用xmp标签包裹着的内容
+                 前面有五个空格也能全部显示
+            可以显示空白字符：(&nbsp;)
+            空白字符有&#32;&nbsp;&emsp;&ensp;等等
+            end
+        </xmp>
+
+        <p>通过&amp;amp;来转义特殊字符中的&，从而达到显示特殊字符的效果。例如：&amp;#32;</p>
+
+        <h2>特殊字符使用标签展示例子</h2> 
+        <xmp>xmp标签显示:&#32;|&nbsp;|&ensp;|&#8194;|&emsp;|&#8195;|&#12288;|&#8203;</xmp>
+        <pre>pre标签显示:&#32;|&nbsp;|&ensp;|&#8194;|&emsp;|&#8195;|&#12288;|&#8203;</pre>
+        <code>code标签显示:&#32;|&nbsp;|&ensp;|&#8194;|&emsp;|&#8195;|&#12288;|&#8203;</code>
+        <p class="generic-font">generic-font字体显示:&#32;|&nbsp;|&ensp;|&#8194;|&emsp;|&#8195;|&#12288;|&#8203;</div>
+
+        <p>xmp标签之间的内容不会被当作文档内容解析，而会被用等宽字体直接呈现。</p> 
+        <i>mdn上：该元素已被废弃。建议使用pre和code元素。通过css样式设置font-family属性为generic-font，可以让任何其他标签获得等宽字体样式。</i>
+        <i>然而，从上面的例子可以看出，只有xmp标签才能显示键盘的空白字符</i>
+
+
+        <h1><xmp>&#32;</xmp></h1> unicode U+0020 普通的英文半角空格
+        <p>对应键盘上的空格键，特点：多个空格会自动合并，而且允许断行。</p>
+        <div>1&#32;2&#32;&#32;3&#32;&#32;&#32;4 <i>注：每个数字之间的空白字符间隙逐渐递增（使用键盘的空格字符）</i></div>
+        <div>1 2  3   4 <i>注：每个数字之间的空白字符间隙逐渐递增（使用键盘的空格）</i></div>
+        <div class="box">
+            <p>我是很多空格&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;但是页面上只会显示成一个，而且宽度不够的时候会自动换行。</p>
+            <p>xwdfasfwewegetdfe&#32;dfafegsfwegfdefawefgwedwewerwe</p>
+        </div>
+
+
+        <h1><xmp>&nbsp;|&#160;</xmp></h1> unicode U+00A0 普通的英文半角空格但不换行，no-break space
+        <p>这个空格本来的使用场景是：用在需要避免断行的地方，比如: 123 MB数字与单位之间不应该有换行</p>
+        <p>这个字符其实就相当于一个英文字母或数字式，受到跟字体相关的样式的影响，比如：font-family,font-size,font-weight等。不同浏览器不同字体等出来的效果都是不一致的。</p>
+        <div>1&nbsp;2&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;4 <i>注：每个数字之间的空白字符间隙逐渐递增</i></div>
+        <div class="box">
+            <p>我是很多空格&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页面上都会显示出来</p>
+            <p>比如234 &nbsp;kb虽然这中间有空格&nbsp;但是肯定不会再中间被断开</p> 
+            <p>xwdfasfwewegetdfe&nbsp;dfafegsfwegfdefawefgwedwewerwe</p> 
+        </div>
+
+
+        <h1><xmp>&ensp;|&#8194;</xmp></h1> unicode U+2002
+        <p>这个空格的宽度绝对等于1/2个汉字的宽度，基本不受字体影响。</p>
+        <div>1一&ensp;2二&ensp;&ensp;3三&ensp;&ensp;&ensp;4四 <i>注：每个数字之间的空白字符间隙逐渐递增</i></div>
+
+
+        <h1><xmp>&emsp;|&#8195;</xmp></h1> unicode U+2003
+        <p>这个空格的宽度绝对等于1个汉字的宽度，基本不受字体影响。</p>
+        <div>1一&emsp;2二&emsp;&emsp;3三&emsp;&emsp;&emsp;4四 <i>注：每个数字之间的空白字符间隙逐渐递增</i></div>
+
+
+        <h1><xmp>&#8197;</xmp></h1> unicode U+2005
+        <p>这个空格的宽度绝对等于1/4个汉字的宽度，基本不受字体影响。</p>
+        <div>1一&#8197;2二&#8197;&#8197;3三&#8197;&#8197;&#8197;4四 <i>注：每个数字之间的空白字符间隙逐渐递增</i></div>
+
+
+        <h1><xmp>&#12288;</xmp></h1> unicode U+3000
+        <p>中文全角空格，宽度为一个汉字宽度。一般作用跟&amp;emsp;一样</p>
+        <div>1一&#12288;2二&#12288;&#12288;3三&#12288;&#12288;&#12288;4四 <i>注：每个数字之间的空白字符间隙逐渐递增</i></div>
+
+
+        <h1><xmp>&#8203;</xmp></h1> unicode U+200B
+        <p>零宽空格，就是一个看不到的空白字符，比较少用。</p>
+        <div>1一&#8203;2二&#8203;&#8203;3三&#8203;&#8203;&#8203;4四 <i>注：每个数字之间的空白字符间隙逐渐递增</i></div>
+
+        <h1>处理元素中空白的样式white-space</h1>
+        <div class="box">
+            white-space:normal 默认行为，换行符会被当做空白符处理。填充line盒子时，必要的话会换行。
+            我是&amp;nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里有5个。
+            我是键盘上的空格     这里有5个。
+            比如234 &nbsp;kb虽然这中间有空格&nbsp;但是肯定不会在中间被断开 
+            xwdfasfwewegetdfe&amp;nbsp;&nbsp;dfafegsfwegfdefawefgwedwewerwe
+            xwdfasfwewegetdfe dfafegsfwegfdefawefgwedwewerwe
+        </div>
+        <div class="box" style="white-space:nowrap">
+            white-space:nowrap 文本内的换行均无效。
+            我是&amp;nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里有5个。
+            我是键盘上的空格     这里有5个。
+            比如234 &nbsp;kb虽然这中间有空格&nbsp;但是肯定不会在中间被断开 
+            xwdfasfwewegetdfe&amp;nbsp;&nbsp;dfafegsfwegfdefawefgwedwewerwe
+            xwdfasfwewegetdfe dfafegsfwegfdefawefgwedwewerwe
+        </div>
+        <div class="box" style="white-space: pre">
+            white-space:pre 连续的空白符会被保留，在遇到换行符或者br元素时才会换行
+            我是&amp;nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里有5个。
+            我是键盘上的空格     这里有5个。
+            比如234 &nbsp;kb虽然这中间有空格&nbsp;但是肯定不会在中间被断开 
+            xwdfasfwewegetdfe&amp;nbsp;&nbsp;dfafegsfwegfdefawefgwedwewerwe
+            xwdfasfwewegetdfe dfafegsfwegfdefawefgwedwewerwe
+            测试br<br>元素的换行
+        </div>
+        <div class="box" style="white-space: pre-wrap">
+            white-space:pre-wrap 连续的空白符会被保留，在遇到换行符或者br元素，或者需要为了填充line盒子时才会换行
+            我是&amp;nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里有5个。
+            我是键盘上的空格     这里有5个。
+            比如234 &nbsp;kb虽然这中间有空格&nbsp;但是肯定不会在中间被断开 
+            xwdfasfwewegetdfe&amp;nbsp;&nbsp;dfafegsfwegfdefawefgwedwewerwe
+            xwdfasfwewegetdfe dfafegsfwegfdefawefgwedwewerwe
+            测试br<br>元素的换行
+        </div>
+        <div class="box" style="white-space: pre-line">
+            white-space:pre-line 连续的空白符会被合并，在遇到换行符或者br元素，或者需要为了填充line盒子时会换行
+            我是&amp;nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里有5个。
+            我是键盘上的空格     这里有5个。
+            比如234 &nbsp;kb虽然这中间有空格&nbsp;但是肯定不会在中间被断开 
+            xwdfasfwewegetdfe&amp;nbsp;&nbsp;dfafegsfwegfdefawefgwedwewerwe
+            xwdfasfwewegetdfe dfafegsfwegfdefawefgwedwewerwe
+            测试br<br>元素的换行
+        </div>
+        <div class="box" style="white-space: break-spaces">
+            white-space:break-spaces 
+            我是&amp;nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里有5个。
+            我是键盘上的空格     这里有5个。
+            比如234 &nbsp;kb虽然这中间有空格&nbsp;但是肯定不会在中间被断开 
+            xwdfasfwewegetdfe&amp;nbsp;&nbsp;dfafegsfwegfdefawefgwedwewerwe
+            xwdfasfwewegetdfe dfafegsfwegfdefawefgwedwewerwe
+            测试br<br>元素的换行
+        </div>
+
+    </body>
+</html>

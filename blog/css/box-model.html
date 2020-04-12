@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>box-model</title>
+        <style>
+            .box {
+                background-color:aquamarine;
+                border: 10px solid darkgreen;
+                padding: 20px;
+                margin: 40px;
+                width: 100px;
+                height: 100px;
+            }
+            .box-sizing {
+                box-sizing: border-box;
+            }
+
+            .button {
+                width: 100px;
+                height: 50px;
+                background-color: #000;
+                color: white;
+                font-size: 25px;
+                border: 1px;
+                position: relative;
+                padding-right: 20px;
+            }
+            .button::after {
+                content: '';
+                width: 26px;
+                height: 26px;
+                background-color: white;
+                top: 13px;
+                display: block;
+                right: -13px;
+                border-radius: 50%;
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box">div content-box</div>
+        <div class="box box-sizing">border-box</div>
+
+        <span class="box">span content-box</span>
+        <span class="box box-sizing">span border-box</span>
+
+        <button class="button">button</button>
+
+    </body>
+</html>

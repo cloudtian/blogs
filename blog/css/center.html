@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>center</title>
+        <style>
+            .box {
+                width: 800px;
+                height: 100px;
+                background-color: rgb(243, 236, 227);
+                border: 1px solid #ccc;
+            }
+            .box + .box {
+                margin-top: 5px;
+            }
+
+            .content-block {
+                width: 400px;
+                height: 80px;
+                background-color: rgb(201, 235, 201);
+                border: 1px solid rgb(219, 219, 219);
+            }
+            .content-inline {
+                background-color: rgb(210, 244, 245);
+            }
+
+            .text-align-center {
+                text-align: center;   
+            }
+            .margin-auto {
+                margin: auto;
+            }
+
+            .line-height {
+                line-height: 100px;
+            }
+
+            .position-relative {
+                position: relative;
+            }
+            .position-absolute-wh {
+                position: absolute;
+                top: calc(50% - 40px);
+                left: calc(50% - 200px);
+            }   
+            .position-absolute-tf {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .display-flex {
+                display: flex;
+            }
+            .align-items-center {
+                align-items:center
+            }
+            .justify-content-center {
+                justify-content:center
+            }
+        </style>
+    </head>
+    <body>
+        <h3>水平居中</h3>
+        <h5>行内元素</h5>
+        <div class="box text-align-center">
+            <span class="content-inline">行内元素，对其父元素设置text-align:center</span>
+        </div>
+
+        <h5>块级元素</h5>
+        <div class="box">
+            <div class="content-block margin-auto">块级元素，对自身设置margin:auto;</div>
+        </div>
+
+        <h3>垂直居中</h3>
+        <h5>行内元素</h5>
+        <div class="box">
+            <span class="content-inline line-height">行内元素，需要对自身或父元素设置line-height值为父元素的height(此处对自身设置)</span>
+        </div>
+
+        <div class="box line-height">
+            <span class="content-inline">行内元素，需要对自身或父元素设置line-height值为父元素的height(此处对父元素设置)</span>
+        </div>
+
+        <h5>块级元素</h5>
+        <div class="box position-relative">
+            <div class="content-block position-absolute-wh">块级元素，设置绝对定位。使用固定宽高top:calc(50% - height/2),left:calc(50%-width/2)</div>
+        </div>
+
+        <div class="box position-relative">
+            <div class="content-block position-absolute-tf">块级元素，设置绝对定位。使用transform:translate(-50%, -50%)</div>
+        </div>
+
+        <div class="box display-flex">
+            <div class="content-block margin-auto">flex布局，父元素设置display:flex，对其自身设置margin:auto，不仅垂直居中，水平也居中</div>
+        </div>
+
+        <div class="box display-flex align-items-center justify-content-center">
+            <div class="content-block">flex布局，父元素设置display:flex，设置align-items:center实现垂直居中，设置justify-content:center实现水平居中</div>
+        </div>
+    </body>
+</html>

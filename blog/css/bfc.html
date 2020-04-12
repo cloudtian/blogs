@@ -1,0 +1,141 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>bfc test</title>
+        <style>
+            .out {
+                border: 10px solid red;
+                min-height: 20px;
+            }
+            .in {
+                background-color: aquamarine;
+                height: 100px;
+                width: 100%;
+            }
+            .float {
+                float: left;
+            }
+            .bfc {
+                display: flow-root;
+                /* 有很多种方法 */
+            }
+
+            .box {
+                border: 3px solid red;
+                height: 100px;
+            }
+            .left {
+                min-width: 200px;
+                margin-right: 20px;
+                float: left;
+            }
+            .right {
+                border-color: blue;
+            }
+
+            .box1 {
+                border: 3px solid red;
+                height: 50px;
+                margin: 10px;
+            }
+
+            .box2 {
+                width: 100px;
+                height: 50px;
+                background-color:blueviolet;
+
+            }
+            .text {
+                border: 1px solid #ddd;
+            }
+        </style>
+    </head>
+    <body>
+        
+        正常文本流
+        <div class="out">
+            out
+            <div class="in">in</div>
+        </div>
+
+        in脱离文本流,in float
+        <div class="out">
+            out
+            <div class="in float">in</div>
+        </div>
+
+        使 BFC 内部的浮动元素不会到处乱跑。
+        <div class="out bfc">
+            out
+            <div class="in float">in</div>
+        </div>
+
+        <hr/>
+
+        左边盒子浮动，想要左右产生间距需要右边设置margin-left=左边盒子宽度+想要的间距
+        <div>
+            <div class="box left">left</div>
+            <div class="box right">right</div>
+        </div>
+
+        <br/>
+        BFC 和浮动元素产生边界
+        <div>
+            <div class="box left">left</div>
+            <div class="box right bfc">right</div>
+        </div>
+
+        <hr/>
+
+        同一个BFC下会出现外边距折叠的情况
+        <div class="bfc">
+            <p class="box1">1</p>
+            <p class="box1">2</p>
+            <p class="box1">3</p>
+        </div>
+
+        通过创建不同的BFC可避免该情况
+        <div>
+            <p class="box1">1</p>
+            <p class="box1">2</p>
+            <div class="bfc">
+                <p class="box1">3</p>
+            </div>
+        </div>
+
+        <hr/>
+
+        文字围绕着浮动元素
+        <div class="box">
+            <div class="box2 float">text</div>
+            <p class="text">
+                some text some text some text some text some text some text some text some text some 
+                text some text some text some text some text some text some text some text some text 
+                some text some text some text
+            </p>
+        </div>
+
+        阻止文字换行(给文字元素建立BFC)
+        <div class="box">
+            <div class="box2 float">text</div>
+            <p class="bfc text">
+                some text some text some text some text some text some text some text some text some 
+                text some text some text some text some text some text some text some text some text 
+                some text some text some text
+            </p>
+        </div>
+
+        <div class="box bfc">
+            <div class="box2 float">text</div>
+            <p class="text">
+                some text some text some text some text some text some text some text some text some 
+                text some text some text some text some text some text some text some text some text 
+                some text some text some text
+            </p>
+        </div>
+        
+        <hr/>
+
+        
+    </body>
+</html>
