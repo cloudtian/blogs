@@ -47,7 +47,7 @@ CSS网格布局使我们能够将网页分成具有简单属性的行和列。�
     <div>Six</div>
 </div>
 ```
-![normal-grid](https://github.com/cloudtian/blogs/blob/master/css-grid-layout/normal-grid.jpg)
+![normal-grid](./normal-grid.jpg)
 
 ### 网格线
 构成网格结构的分界线，每行的行网格线(水平的)和每列的列网格线(垂直的)。网格线的编号顺序取决于文章的书写模式。 
@@ -104,7 +104,7 @@ CSS网格布局使我们能够将网页分成具有简单属性的行和列。�
     <div class="grid-item footer">Footer</div>
 </div>
 ```
-![area-named-grid](https://github.com/cloudtian/blogs/blob/master/css-grid-layout/area-named-grid.jpg)
+![area-named-grid](./area-named-grid.jpg)
 
 ### 网格间距
 网格单元之间的间距，包括横向间距`grid-column-gap`和纵向间距`grid-row-gap`。两个属性合并缩写`grid-gap: grid-row-gap grid-column-gap`。如果只给出一个值，那么这个值会同时应用于行间距和列间距。
@@ -188,4 +188,4 @@ CSS网格布局使我们能够将网页分成具有简单属性的行和列。�
     <div class="grid-item overlay">Overlay</div>
 </div>
 ```
-![overlay-grid](https://github.com/cloudtian/blogs/blob/master/css-grid-layout/overlay-grid.jpg)
+![overlay-grid](./overlay-grid.jpg)

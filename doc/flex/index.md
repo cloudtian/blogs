@@ -101,5 +101,5 @@ Flex属性的简写: flex-grow, flex-shrink, flex-basis
 2. flex第三个参数（flex-basis）如果没有带单位，会被IE10-11会视为非法规则并忽略掉。常使用0%来替代0px。
 
 ### 效果预览
-[Flex弹性布局](https://github.com/cloudtian/blogs/blob/master/flex/index.html)
-![Flex弹性布局](https://github.com/cloudtian/blogs/blob/master/flex/flex.png)
+[Flex弹性布局](./index.html)
+![Flex弹性布局](./flex.png)

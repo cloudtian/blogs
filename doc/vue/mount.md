@@ -179,4 +179,4 @@ export function mountComponent (
 `1.render方法是如何生成的` 和 `2.__patch__方法是如何比较两个vnode`
 
 整个mount流程大致如下  
-![mount](https://github.com/cloudtian/blogs/blob/master/vue/mount.jpg)
+![mount](./mount.jpg)

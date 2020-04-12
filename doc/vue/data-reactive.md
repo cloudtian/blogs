@@ -219,4 +219,4 @@ export function defineReactive (
   })
 }
 ```
-![observer](https://github.com/cloudtian/blogs/blob/master/vue/observer.jpg)  
+![observer](./observer.jpg)  
