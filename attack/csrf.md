@@ -1,3 +1,14 @@
   
 ## 跨站请求伪造CSRF
-> Cross site request forgery。也被成为one-click attack或session riding，通常缩写CSRF或者XSRF。是一种挟制用户在当前已登录的Web应用程序上执行非本意的操作的攻击方法。  
+> Cross site request forgery。也被称为one-click attack或session riding，通常缩写CSRF或者XSRF。是一种挟制用户在当前已登录的Web应用程序上执行非本意的操作的攻击方法。  
+> XSS利用站点内的信任用户，CSRF则通过伪装来自受信任用户的请求，来利用受信任的网站。  
+> 即：攻击者盗用了你的身份（即用了你的COOKIE），以你的名义进行某些非法操作。CSRF能够修改你的密码，使用你的账户发送邮件，获取你的敏感信息，甚至盗走你的财产等。
+
+
+要完成一次CSRF攻击，受害者必须依次完成两个步骤：
+
+1. 登录受信任网站A，并在本地生成Cookie，并在不登出网站A的情况下，访问恶意网站B。
+2. 必须是同一浏览器，因为不同浏览器不能相互利用COOKIE。
+
+漏洞危害：修改密码、添加用户、增删改配置等。  
+触发场景：CSRF经常出现在密码修改、添加用户、配置增删改等位置。
