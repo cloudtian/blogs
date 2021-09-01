@@ -1,12 +1,14 @@
 > [原文](https://gist.github.com/paulirish/5d52fb081b3570c81e3a)
 
-# 什么是强制布局/重绘
+# 什么是强制布局/reflow (回流，重排)
 
-下面所有的属性或方法，在JavaScript中被调用时，都会触发浏览器去同步计算样式并布局。这也叫做重绘或者[布局抖动](http://www.kellegous.com/j/2013/01/26/layout-performance/)，这也是常见的性能瓶颈。
+下面所有的属性或方法，在JavaScript中被调用时，都会触发浏览器去同步计算样式并布局。这也叫做回流或者[布局抖动](https://kellegous.com/j/2013/01/26/layout-performance/)，这也是常见的性能瓶颈。
 
-### 元素
+通常来说，所有同步提供布局参数的API都会触发强制的回流/布局。请继续阅读其他案例和细节。
 
-##### 盒子度量
+### 元素API
+
+##### 获取盒子度量参数
 * `elem.offsetLeft`, `elem.offsetTop`, `elem.offsetWidth`, `elem.offsetHeight`, `elem.offsetParent`
 * `elem.clientLeft`, `elem.clientTop`, `elem.clientWidth`, `elem.clientHeight`
 * `elem.getClientRects()`, `elem.getBoundingClientRect()`
@@ -15,28 +17,27 @@
 * `elem.scrollBy()`, `elem.scrollTo()`
 * `elem.scrollIntoView()`, `elem.scrollIntoViewIfNeeded()`  
 * `elem.scrollWidth`, `elem.scrollHeight`
-* `elem.scrollLeft`, `elem.scrollTop` also, setting them
-
+* `elem.scrollLeft`, `elem.scrollTop` 以及设置它们。
 
 ##### 聚焦
-* `elem.focus()` 会触发 *两次* 强制重绘 ([source](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Element.cpp?q=updateLayoutIgnorePendingStylesheets+-f:out+-f:test&sq=package:chromium&dr=C)&l=2923)
+* `elem.focus()` ([source](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Element.cpp?q=updateLayoutIgnorePendingStylesheets+-f:out+-f:test&sq=package:chromium&dr=C)&l=2923)
 
 ##### 其他…
 * `elem.computedRole`, `elem.computedName`  
 * `elem.innerText` ([source](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Element.cpp?q=updateLayoutIgnorePendingStylesheets+-f:out+-f:test&sq=package:chromium&dr=C)&l=3440))
 
-### getComputedStyle 
+### 调用 getComputedStyle()
 
 `window.getComputedStyle()` 通常会强制样式重新计算 
 
 `window.getComputedStyle()` 通常会强制布局，并且，如果下面任何一项为真时：
 
 1. 元素在隐藏的树下
-1. 媒体查询属性 (关联视口的那些). 特别是下面这些: ([source](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/MediaQueryExp.cpp?type=cs&q=f:MediaQueryExp.cpp+MediaQueryExp::IsViewportDependent&l=192))
+2. 媒体查询属性 (关联视口的那些). 特别是下面这些: ([source](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/MediaQueryExp.cpp?type=cs&q=f:MediaQueryExp.cpp+MediaQueryExp::IsViewportDependent&l=192))
   * `min-width`, `min-height`, `max-width`, `max-height`, `width`, `height`
   * `aspect-ratio`, `min-aspect-ratio`, `max-aspect-ratio`
   * `device-pixel-ratio`, `resolution`, `orientation` , `min-device-pixel-ratio`, `max-device-pixel-ratio`
-1. 必填的属性是以下几种:  ([source](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/CSSComputedStyleDeclaration.cpp?dr=C&q=f:CSSComputedStyleDeclaration.cpp+isLayoutDependent&sq=package:chromium))
+3. 必填的属性是以下几种:  ([source](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/CSSComputedStyleDeclaration.cpp?dr=C&q=f:CSSComputedStyleDeclaration.cpp+isLayoutDependent&sq=package:chromium))
   * `height`, `width`
   * `top`, `right`, `bottom`, `left`
   * `margin` [`-top`, `-right`, `-bottom`, `-left`, or *简写*] 当margin是确定值时.
@@ -47,27 +48,27 @@
   * `perspective-origin`
   * 这些属性以前在列表中，但是现在似乎不存在了(as of Feb 2018): `motion-path`, `motion-offset`, `motion-rotation`, `x`, `y`, `rx`, `ry`
 
-### window
+### 获取window尺寸
 
 * `window.scrollX`, `window.scrollY`
 * `window.innerHeight`, `window.innerWidth`
-* `window.getMatchedCSSRules()` 仅强制样式
+*  window.visualViewport.height / width / offsetTop / offsetLeft ([source](https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/frame/visual_viewport.cc;l=435-461;drc=a3c165458e524bdc55db15d2a5714bb9a0c69c70?originalUrl=https:%2F%2Fcs.chromium.org%2F))
 
-
-### Forms
+### Forms: 设置选择 和 聚焦
 
 * `inputElem.focus()`
 * `inputElem.select()`, `textareaElem.select()`
 
-### Mouse events
+### Mouse events: 获取偏移数据
 
 * `mouseEvt.layerX`, `mouseEvt.layerY`, `mouseEvt.offsetX`, `mouseEvt.offsetY` ([source](https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/events/MouseEvent.cpp?type=cs&q=f:Mouse+f:cpp+::computeRelativePosition&sq=package:chromium&l=517))
 
 ### document
 
-* `doc.scrollingElement` 仅强制样式
+* `document.scrollingElement` 仅强制样式
+* `document.elementFromPoint`
 
-### Range
+### 获取Range的尺寸
 
 * `range.getClientRects()`, `range.getBoundingClientRect()`
 
@@ -83,16 +84,16 @@
 
 ## *附录
 
-* 只有当文档更改并使得样式或布局无效时，重绘才有成本。通常，这是因为DOM被改变了。（修改了类，增加/删除节点，甚至是添加了类似:focus之类的伪类）
-* 如果布局被强制了，首先被重新计算的是样式。因此强制布局会触发两个操作。他们的开销十分依赖于内容/场景，但是通常二者的开销相似。
-* 你应该怎么做？ 更多关于强制布局的部分下面涵盖了更多的细节，但是尖端的版本是：: 
-  1. 强制重绘或修改DOM结构的`for` 循环是最坏的，应该避免. 
-  1. 使用开发者工具的时间线可以看出什么时候发生了什么，你可能会惊讶于你的代码和库代码多久触发一次重绘。
-  1. 分批处理读写DOM操作。 (通过[FastDOM](https://github.com/wilsonpage/fastdom) 或者实现虚拟DOM). 在框架的开头阅读需要的指标 (在`rAF`的非常非常的开端, 滚动事件处理等等), 当这些值与最近一次布局结束后仍然一致时。 
+* 只有当文档更改并使得样式或布局无效时，回流才有成本。通常，这是因为DOM被改变了。（修改了类，增加/删除节点，甚至是添加了类似:focus之类的伪类）
+* 如果布局被强制修改，首先被重新计算的是样式。因此强制布局会触发两个操作。他们的开销十分依赖于内容/场景，但是通常二者的开销相似。
+* 你应该怎么做？ 下面的强制布局一节将更详细地介绍所有内容，但简短的版本是： 
+  1. 强制布局或修改DOM结构的`for` 循环是最糟糕的，应该避免它们. 
+  1. 使用开发者工具的时间线可以看出什么时候发生了什么，你可能会惊讶于你的代码和库代码多久触发一次。
+  1. 分批处理读写DOM操作。 (通过[FastDOM](https://github.com/wilsonpage/fastdom) 或者实现虚拟DOM). 在框架的开头阅读需要的参数 (在`rAF`的非常非常的开端, 滚动事件处理等等), 当这些值与最近一次布局结束后仍然一致时。 
 
 <center>
 <img src="https://cloud.githubusercontent.com/assets/39191/10144107/9fae0b48-65d0-11e5-8e87-c9a8e999b064.png">
- <i>从Guardian的时间线痕迹中可以看出，Outbrain不断地强制布局，可能是在一个循环中。</i>
+ <i>从Guardian的时间线痕迹中可以看出，Outbrain重复地强制布局，可能是在一个循环中。</i>
 </center>
 
 ##### 浏览器兼容性 
