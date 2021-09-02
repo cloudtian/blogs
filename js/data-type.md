@@ -30,20 +30,20 @@ JavaScript是一种**动态类型**的语言（或者说是**弱类型**），�
 ##### 属性  
 对象有两种属性：数据属性和访问器属性。  
 数据属性  
-特性 | 数据类型 | 描述 | 默认值
---|--|--|--|
-[[value]]|任何类型|数据值|undefined
-[[Writable]]|Boolean|false->[[value]]特性不能被改变|false
-[[Enumerable]]|Boolean|true->则属性可以用for...in循环来枚举|false
-[[Configurable]]|Boolean|false->属性不能被删除，并且除了[[value]]和[[Writable]]以外的特性都不能被改变|false
+|特性 | 数据类型 | 描述 | 默认值|
+|--|--|--|--|
+|[[value]]|任何类型|数据值|undefined|
+|[[Writable]]|Boolean|false->[[value]]特性不能被改变|false|
+|[[Enumerable]]|Boolean|true->则属性可以用for...in循环来枚举|false|
+|[[Configurable]]|Boolean|false->属性不能被删除，并且除了[[value]]和[[Writable]]以外的特性都不能被改变|false|
 
 访问器属性  
-特性 | 类型 | 描述 | 默认值
---|--|--|--|
-[[Get]]]|函数对象或者undefined|该函数使用一个空的参数列表，能够在有权访问的情况下读取属性值。|undefined
-[[Set]]|函数对象或者undefined|该函数有一个参数，用来写入属性值|undefined
-[[Enumerable]]|Boolean|true->则属性可以用for...in循环来枚举|false
-[[Configurable]]|Boolean|false->属性不能被删除，并且不能被转变成一个数据属性|false
+|特性 | 类型 | 描述 | 默认值|
+|--|--|--|--|
+|[[Get]]]|函数对象或者undefined|该函数使用一个空的参数列表，能够在有权访问的情况下读取属性值。|undefined|
+|[[Set]]|函数对象或者undefined|该函数有一个参数，用来写入属性值|undefined|
+|[[Enumerable]]|Boolean|true->则属性可以用for...in循环来枚举|false|
+|[[Configurable]]|Boolean|false->属性不能被删除，并且不能被转变成一个数据属性|false|
 
 ```javascript
 var obj = {};
