@@ -30,7 +30,7 @@ console.log(b instanceof A) // true
 #### 构造函数继承
 使用父类的构造函数增强子类实例，等同于复制父类的实例属性给子类
 ```javascript
-function B (name) {
-    A.call(this)
+function B () {
+    A.apply(this, arguments)
 }
 ```
