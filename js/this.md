@@ -58,3 +58,113 @@ this 是 当前指向上下文的一个属性。
 - 作为一个内联事件处理函数：当代码被内联on-event处理函数调用时，它的`this`指向监听器所在的DOM元素
 - 类中的`this`：和其他普通函数一样，方法中的`this`值取决于他们如何被调用。
   > 不过有时，我们期望类中的方法的`this`值总是指向这个类的实例，可以在构造函数中通过`bind`绑定类方法。
+
+
+
+### call 和 apply
+call()方法在使用一个指定的this值和若干个指定的参数值的前提下调用某个函数或方法   
+apply()方法在使用一个指定的this值和参数值必须是数组类型的前提下调用某个函数或方法
+
+类比
+```javascript
+f.call(o)  // 或者 f.apply(o) 功能：调用f()方法时，设置函数体内的this指向对象o
+// 类似于 （假设对象o不存在名为m的属性）
+o.m = f; // 将f存储为o的临时方法
+o.m(); // 调用它，不传参数
+delete o.m; // 删除临时方法
+```
+
+##### 实现apply
+```javascript
+// 随机生成一个对象obj的唯一属性
+function getUniqueKey(obj) {
+    var uniqueProper = '00' + Math.random();
+    if (obj.hasOwnProperty(uniqueProper)) {
+        arguments.callee(obj)//如果obj已经有了这个属性，递归调用，直到没有这个属性
+    } else {
+        return uniqueProper;
+    }
+}
+
+Function.prototype.myApply = function (context) {
+    context = context || window; // apply支持传null或不传。传null时视为window 
+    var args = arguments[1]; // apply方法第二个参数为参数数组
+    var fn = getUniqueKey(context); // 要保证我们新增的属性在context上属性的唯一性，可以使用随机数
+    context[fn] = this; // context 为要替换的this上下文，当前函数的this指向要执行的函数
+    var result; // 保存结果用于返回
+    if (args === void 0) { // 没有传参则直接执行
+        result = context[fn](); 
+    } else { // 支持传参，拼接参数 
+        var params = []; 
+        for(var i = 0; i < args.length; i++) {
+            params.push('args[' + i +']');
+        }
+        result = eval('context[fn](' + params + ')'); // 强大的eval可以计算字符串，执行其中的js代码
+    }   
+    
+    delete context[fn];
+    return result;
+}
+
+name = "home"
+var tsy = {
+    name: 'tsy',
+    myName (age, other) {
+        console.log(this.name, age, other);
+        return {
+            name: this.name,
+            age
+        };
+    }
+}
+var jht = {
+    name: 'jht'
+}
+
+tsy.myName(); // tsy
+tsy.myName.myApply(jht); // jht
+tsy.myName.myApply(jht, [24]); // jht 24
+tsy.myName.myApply(null, [24, '24']); // home 24 '24'
+```
+
+##### 实现call
+直接利用上面的myApply方法实现myCall。
+```javascript
+Function.prototype.myCall = function () {
+    return this.myApply([].shift.myApply(arguments), arguments);
+}
+
+tsy.myName(); // tsy
+tsy.myName.myCall(jht); // jht
+tsy.myName.myCall(jht, 24); // jht 24
+tsy.myName.myCall(null, 24, '24'); // home 24 '24'
+```
+
+##### 实现bind  
+bind方法创建一个新函数，称为绑定函数。绑定函数会以创建它时传入bind方法的第一个参数作为this。  
+传入bind方法的第二个以及以后的参数加上绑定函数运行时本身的参数按照顺序作为原函数的参数来调用原函数。
+```javascript 
+Function.prototype.myBind = function (context) {
+   var fn = this;
+   if (typeof fn !== 'function') {
+       throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable')
+   }
+   var args = Array.prototype.slice.myCall(arguments, 1);
+   var F = function () {};
+   if (this.prototype) {
+       F.prototype = this.prototype;
+   }
+   var bound = function () {
+       var params = args.concat(Array.prototype.slice.myCall(arguments));
+       return fn.myApply((this instanceof F ? this : context || this), params);
+   }
+   bound.prototype = new F();
+   return bound;
+}
+
+tsy.myName(); // tsy
+tsy.myName.myBind(jht)(); // jht
+tsy.myName.myBind(jht, 24)(); // jht 24
+tsy.myName.myBind(null, 24)('24'); // home 24 '24'
+tsy.myName.myBind(null)(24, '24'); // home 24 '24'
+```
